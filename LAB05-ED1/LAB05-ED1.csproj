@@ -5,4 +5,8 @@
     <RootNamespace>LAB05_ED1</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
