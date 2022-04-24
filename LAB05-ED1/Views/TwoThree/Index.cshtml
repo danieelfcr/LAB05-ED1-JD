@@ -5,7 +5,17 @@
 }
 
 <h1>Index</h1>
-
+@{
+    if (ViewBag.File == null)
+    {
+        <form asp-controller="TwoThree" asp-action="Index" method="post" enctype="multipart/form-data">
+            <input type="file" name="File" accept=".CSV" /> <br /> <br />
+            <input class="btn-info text-white" type="submit" value="vehicle list" />
+        </form>
+        <br />
+        <br />
+    }
+}
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -31,29 +41,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LicensePlate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Latitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Longitude)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicensePlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Latitude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longitude)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
