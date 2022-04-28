@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClassLibrary
 {
-    public class TwoThreeTree<T> : ITwoThree
+    public class TwoThreeTree<T> : ITwoThree<T>
     {
         public Node<T> Root;
         public int NodeCount;
@@ -19,6 +19,7 @@ namespace ClassLibrary
             NodeCount = 0;
         }
 
+      
 
         public Node<T> Insert(Node<T> node, T value)
         {
@@ -80,10 +81,8 @@ namespace ClassLibrary
             return node;
         }
 
-
-
-
        
+
         public Node<T> Split(ref Node<T> nodeToSplit, T valueToInsert)
         {
             Node<T> newParent = null;
@@ -91,17 +90,14 @@ namespace ClassLibrary
             if (nodeToSplit == Root)
             {
 
-                //Node<T> left = new Node<T>(Comparer, nodeToSplit.LeftValue, default(T));
-
-                //Node<T> right = new Node<T>(Comparer, nodeToSplit.RightValue, default(T));
+                
                 Node<T> left = new Node<T>(Comparer, ref nodeToSplit.LeftChild, nodeToSplit.LeftValue, -1);
                 Node<T> right = new Node<T>(Comparer, ref nodeToSplit.RightChild, nodeToSplit.RightValue, 1);
 
                 newParent = new Node<T>(Comparer, nodeToSplit.middletValue, default(T), left, right);
                 left.Parent = newParent;
                 right.Parent = newParent;
-                //Root = newParent;
-                //return Root;
+                
                 return newParent;
             }
             else
@@ -114,8 +110,7 @@ namespace ClassLibrary
                     Node<T> leftCopy = new Node<T>(Comparer, ref nodeToSplit.LeftChild, nodeToSplit.LeftValue, -1);
                     Node<T> rightCopy = new Node<T>(Comparer, ref nodeToSplit.RightChild, nodeToSplit.RightValue, 1);
 
-                    //nodeToSplit.Parent.LeftChild = leftCopy;
-                    //nodeToSplit.Parent.RightChild = rightCopy;
+                    
 
                     nodeToSplit.Parent.DeleteChild(nodeToSplit);
                     nodeToSplit.Parent.AddChild(ref leftCopy);
@@ -145,17 +140,41 @@ namespace ClassLibrary
             
         }
 
-        public void UpdateTree (ref Node<T> current, ref Node<T> nodeToAdd)
+        public T Search(Node<T> node, T value)
         {
-            if (current == null)
+            if (node == null)
             {
-                Node<T> newNode = nodeToAdd;
-                newNode.Parent = current.Parent;
+                return default;
+            }
+            if (node.ContainsValue(value) != 0)
+            {
+                if (node.ContainsValue(value) == -1)
+                    return node.LeftValue;
+                else return node.RightValue;
             }
             else
             {
-                
+                if (Comparer(value, node.LeftValue) == -1)
+                {
+                    Search(node.LeftChild, value);
+                }
+                else if (Comparer(value, node.LeftValue) == 1 && Comparer(value, node.RightValue) == -1)
+                {
+                    Search(node.MiddleChild, value);
+                }
+                else if (Comparer(value, node.RightValue) == 1)
+                {
+                    Search(node.RightChild, value);
+                }
             }
+
+
+            return default;
+        }
+
+        public void Edit(Node<T> node, T value)
+        {
+            throw new NotImplementedException();
         }
 
 

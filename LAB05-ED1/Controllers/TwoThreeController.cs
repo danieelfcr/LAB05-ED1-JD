@@ -19,11 +19,26 @@ namespace LAB05_ED1.Controllers
             Environment = _environment;
         }
 
+        
+
         // GET: TwoThreeController
         public ActionResult Index()
         {
-            return View(Data.Instance.VehicleTree.ElementList.OrderBy(x=> x.LicensePlate));
+            if (Data.Instance.Searchlist.Count == 0)
+                return View(Data.Instance.VehicleTree.ElementList.OrderBy(x => x.LicensePlate));
+            else
+            {
+                List<Vehicle> aux = new List<Vehicle>();
+                aux.Add(Data.Instance.Searchlist[0]);
+                //var aux = Data.Instance.Searchlist[0];
+                Data.Instance.Searchlist.Clear();
+                return View(aux);
+            }
+                
         }
+
+        
+
 
         [HttpPost]
         public ActionResult Index(IFormFile File)
@@ -122,6 +137,27 @@ namespace LAB05_ED1.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Search(string Search)
+        {
+            string licensePlate = Search;
+            Vehicle vehicle = new Vehicle
+            {
+                LicensePlate = licensePlate
+            };
+
+            //List<Vehicle> SearchedVehicle = new List<Vehicle>();
+
+            Data.Instance.Searchlist.Clear();
+            Data.Instance.Searchlist.Add(Data.Instance.VehicleTree.Search(Data.Instance.VehicleTree.Root, vehicle));
+
+            
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
 
         // POST: TwoThreeController/Edit/5
         [HttpPost]

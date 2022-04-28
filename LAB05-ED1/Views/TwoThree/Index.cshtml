@@ -16,6 +16,14 @@
         <br />
     }
 }
+
+<form asp-controller="TwoThree" asp-action="Search" method="post" enctype="multipart/form-data">
+    <input type="text" name="Search"/> <br /> <br />
+    <input class="btn-info text-white" type="submit" value="Search vehicle" />
+</form>
+<br />
+<br />
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -41,39 +49,43 @@
         </tr>
     </thead>
     <tbody>
-@{ 
-    if (Model != null)
-    {
+        @{
+            if (Model != null)
+            {
 
 
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LicensePlate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Owner)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Latitude)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Longitude)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+                @foreach (var item in Model)
+                {
+                    if (item != null)
+                    {
+                        <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LicensePlate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Color)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Owner)
+                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Latitude)
+                        </td>
+                        <td>
+                             @Html.DisplayFor(modelItem => item.Longitude)
+                        </td>
+                        <td>
+                             @Html.ActionLink("Edit", "Edit", new { id = item.LicensePlate }) |
+                             @Html.ActionLink("Details", "Details", new { id = item.LicensePlate }) |
+                             @Html.ActionLink("Delete", "Delete", new { id = item.LicensePlate })
+                        </td>
+                        </tr>
+                    }
+                    
+                }
+
+            }
         }
-
-        }
-    }
     </tbody>
 </table>
