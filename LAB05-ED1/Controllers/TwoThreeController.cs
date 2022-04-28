@@ -20,9 +20,9 @@ namespace LAB05_ED1.Controllers
         }
 
         // GET: TwoThreeController
-        public ActionResult Index(List<Vehicle> list)
+        public ActionResult Index()
         {
-            return View(list);
+            return View(Data.Instance.VehicleTree.ElementList.OrderBy(x=> x.LicensePlate));
         }
 
         [HttpPost]
@@ -65,8 +65,8 @@ namespace LAB05_ED1.Controllers
                             Longitude = Convert.ToDouble(aux[4])
                         };
 
-                        //INSERTION IS MISSING
 
+                        Data.Instance.VehicleTree.Root = Data.Instance.VehicleTree.Insert(Data.Instance.VehicleTree.Root, vehicle);
                     }
                 }
                 catch
@@ -106,7 +106,8 @@ namespace LAB05_ED1.Controllers
                     Longitude = Convert.ToDouble(collection["Longitude"]),
                 };
 
-                //Insertion in tree is missing
+                
+                Data.Instance.VehicleTree.Root = Data.Instance.VehicleTree.Insert(Data.Instance.VehicleTree.Root, vehicle);
 
                 return RedirectToAction(nameof(Index));
             }
