@@ -12,6 +12,7 @@ namespace ClassLibrary
 
         public T Search(Node<T> node,  T value);
 
-        public void Edit(Node<T> node,  T value);
+        public void Edit(Node<T> node,  T value, Action<T,T> Edit);
+
     }
 }
