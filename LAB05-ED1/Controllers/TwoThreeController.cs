@@ -132,10 +132,22 @@ namespace LAB05_ED1.Controllers
             }
         }
 
-        // GET: TwoThreeController/Edit/5
-        public ActionResult Edit(int id)
+
+
+        public Action<Vehicle, Vehicle> EditData = (currentVehicle, EditedVehicle) =>
         {
-            return View();
+            currentVehicle.Latitude = EditedVehicle.Latitude;
+            currentVehicle.Longitude = EditedVehicle.Longitude;
+        };
+
+        // GET: TwoThreeController/Edit/5
+        public ActionResult Edit(string id)
+        {
+            Vehicle aux = new Vehicle
+            {
+                LicensePlate = id
+            };
+            return View(Data.Instance.VehicleTree.Search(Data.Instance.VehicleTree.Root, aux));
         }
 
         [HttpPost]
@@ -162,10 +174,22 @@ namespace LAB05_ED1.Controllers
         // POST: TwoThreeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(string id, IFormCollection collection)
         {
             try
             {
+                Vehicle newData = new Vehicle
+                {
+                    LicensePlate = id,
+                    Latitude = Convert.ToDouble(collection["Latitude"]),
+                    Longitude = Convert.ToDouble(collection["Longitude"])
+
+                };
+
+
+                Data.Instance.VehicleTree.Edit(Data.Instance.VehicleTree.Root, newData,  EditData);
+                Data.Instance.Searchlist.Clear();
+                Data.Instance.Searchlist.Add(Data.Instance.VehicleTree.Search(Data.Instance.VehicleTree.Root, newData));
                 return RedirectToAction(nameof(Index));
             }
             catch

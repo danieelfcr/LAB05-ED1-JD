@@ -172,9 +172,42 @@ namespace ClassLibrary
             return default;
         }
 
-        public void Edit(Node<T> node, T value)
+        public void Edit(Node<T> node, T value, Action<T,T> Edit )
         {
-            throw new NotImplementedException();
+            if (node != null)
+            {
+                int position = node.ContainsValue(value);
+                if (position == -1)
+                {
+                    if (Comparer(value, node.LeftValue) == 0)
+                    {
+                        Edit(node.LeftValue, value );
+                    }
+                }
+                else if (position == 1)
+                {
+                    if (Comparer(value, node.RightValue) == 0)
+                    {
+                        Edit(node.RightValue, value);
+                    }
+                }
+                else
+                {
+                    if (Comparer(value, node.LeftValue) == -1)
+                    {
+                        Search(node.LeftChild, value);
+                    }
+                    else if (Comparer(value, node.LeftValue) == 1 && Comparer(value, node.RightValue) == -1)
+                    {
+                        Search(node.MiddleChild, value);
+                    }
+                    else if (Comparer(value, node.RightValue) == 1)
+                    {
+                        Search(node.RightChild, value);
+                    }
+                }
+            }
+            
         }
 
 
