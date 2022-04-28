@@ -22,6 +22,8 @@ namespace LAB05_ED1.Helpers
             }
         }
 
+        public  List<Vehicle> Searchlist = new List<Vehicle>();
+
         public static Func<Vehicle, Vehicle, int> Comparer = (vehicle_A, vehicle_B) =>
         {
             return vehicle_A.LicensePlate.CompareTo(vehicle_B.LicensePlate);

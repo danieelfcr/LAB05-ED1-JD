@@ -62,54 +62,28 @@ namespace ClassLibrary
             }
                
 
-            /*
-            if (position == -1) //creates a copy of left subtree
-            {
-                
-
-                if (child != null)
-                {
-                    child.Parent = this;
-                    LeftChild = child;
-                }
-
-
-                
-            }
-            else  //creates a copy of right subtree
-            {
-
-                if (child != null)
-                {
-                    child.Parent = this;
-                    RightChild = child;
-                }
-
-
-                
-            }*/
 
             LeftValue = value;
 
         }
-
-        /*
-
-        public Node(Func<T, T, int> Comparer, ref Node<T> Left, ref Node<T> Right, T RValue)
+            
+        public int ContainsValue(T value)
         {
-            this.Comparer = Comparer;
-           
-            if (Right != null)
+            if (LeftValue != null)
             {
-                Right.Parent = this;
-                RightChild = Right;
-            }
+                if (Comparer(value, LeftValue) == 0)
+                    return -1;
                 
+            }
             
-            RightValue = RValue;
-        }*/
-            
-            
+            if (RightValue != null)
+            {
+                if (Comparer(value, RightValue) == 0)
+                    return 1;
+            }
+
+            return 0;
+        }
 
         public bool IsLeaf()
         {
